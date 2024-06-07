@@ -13,8 +13,8 @@ const Signup = () => {
 
   return (
     <>
-      <div className="bg-base-200 mt-12 mb-12">
-        <div className="hero-content flex-col lg:flex-row py-16">
+      <div className="min-h-screen bg-base-200 mt-12 mb-12">
+        <div className="hero-content flex-col lg:flex-row md:py-28">
             <div className="md:mr-28">
                 <img src={cartoonImg} alt="" className="w-3/4 md:w-full mx-auto"/>
             </div>
