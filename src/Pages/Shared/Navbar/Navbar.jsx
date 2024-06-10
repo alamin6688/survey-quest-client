@@ -1,12 +1,27 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 
 const Navbar = () => {
 
+  const {user, logOut} = useAuth();
+
+  const handleLogout = () =>{
+    logOut()
+      .then(()=>{})
+      .catch(error => console.error(error))
+  }
 
   const navLinks = (
     <>
       <li><Link to="/" className="font-bold">Home</Link></li>
-      <li><Link to="/login" className="font-bold">Login</Link></li>
+      {
+      user? <>
+      <li><Link onClick={handleLogout} className="font-bold">Logout</Link></li>
+      </> : 
+      <>
+      <li><Link to="/login" className="font-bold">Login  </Link></li>
+      </>
+    }
       <li><Link to="/signup" className="font-bold">Sign Up</Link></li>
 
     </>

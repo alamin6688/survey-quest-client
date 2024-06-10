@@ -1,18 +1,55 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import cartoonImg from '../../assets/images/cartoon.png'
+import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Signup = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const { createUser } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    createUser(data.email, data.password)
+    .then((result) => {
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName
+      }
+      // console.log(result.user);
+      axiosPublic.post('/users', userInfo)
+      .then(res => {
+        console.log(res.data);
+        reset();
+        if (res.data.insertedId){
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Signed Up successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        navigate('/');
+      })
+      .catch((error) => console.log(error));
+    });
+  };
 
   return (
     <>
+        <Helmet>
+          <title>Survey Quest | Sign Up</title>
+        </Helmet>
       <div className="min-h-screen bg-base-200 mt-12 mb-12">
         <div className="hero-content flex-col lg:flex-row md:py-28">
             <div className="md:mr-28">
@@ -121,6 +158,7 @@ const Signup = () => {
                   </small>
                 </p>
               </div>
+              <SocialLogin></SocialLogin>
             </form>
           </div>
         </div>
