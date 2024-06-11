@@ -15,10 +15,11 @@ const SocialLogin = () => {
     const handleGoogleSignIn = () =>{
         googleSignIn()
         .then(result => {
-            console.log(result.user)
             const userInfo = {
               email: result.user?.email,
-              name: result.user?.displayName
+              name: result.user?.displayName,
+              photoURL: result.user?.photoURL,
+              role: 'user',
             }
             axiosPublic.post('/users', userInfo)
             .then(res => {

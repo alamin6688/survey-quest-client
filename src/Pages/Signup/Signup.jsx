@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import cartoonImg from '../../assets/images/cartoon.png'
+import cartoonImg from "../../assets/images/cartoon.png";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
@@ -14,47 +14,56 @@ const Signup = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    createUser(data.email, data.password)
-    .then((result) => {
-      const userInfo = {
-        email: result.user?.email,
-        name: result.user?.displayName
-      }
-      // console.log(result.user);
-      axiosPublic.post('/users', userInfo)
-      .then(res => {
-        console.log(res.data);
-        reset();
-        if (res.data.insertedId){
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Signed Up successfully!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-        navigate('/');
+    const email = data.email;
+    const name = data.name;
+    const password = data.password;
+    const photoURL = data.photoURL;
+
+    const newUser = {
+      email: email,
+      name: name,
+      photoURL: photoURL,
+      role: "user",
+    };
+
+
+    createUser(email, password)
+      .then(() => {
+        const name = data.name;
+        const photo = data.photoURL;
+        updateUserProfile(name, photo);
+
+        //post user to DB
+        axiosPublic.post("/users", newUser);
       })
-      .catch((error) => console.log(error));
-    });
+      .then(() => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Signed Up successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        reset();
+        navigate("/");
+      });
   };
 
   return (
     <>
-        <Helmet>
-          <title>Survey Quest | Sign Up</title>
-        </Helmet>
+      <Helmet>
+        <title>Survey Quest | Sign Up</title>
+      </Helmet>
       <div className="min-h-screen bg-base-200 mt-12 mb-12">
         <div className="hero-content flex-col lg:flex-row md:py-28">
-            <div className="md:mr-28">
-                <img src={cartoonImg} alt="" className="w-3/4 md:w-full mx-auto"/>
-            </div>
+          <div className="md:mr-28">
+            <img src={cartoonImg} alt="" className="w-3/4 md:w-full mx-auto" />
+          </div>
           <div className="card w-full max-w-sm shadow-2xl bg-base-100">
             <div className="text-center pt-6">
               <h3 className="text-4xl font-bold">Sign Up</h3>
