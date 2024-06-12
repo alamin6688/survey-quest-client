@@ -98,7 +98,7 @@ const SurveyDetails = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="mt-10 bg-base-200 shadow-lg rounded-lg overflow-hidden pt-8 pb-4 md:px-8 mb-16">
       <h2 className="text-4xl text-center font-bold mb-4">Enter Your Survey</h2>
       <div className="p-5">
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,9 +135,10 @@ const SurveyDetails = () => {
               <option value="category3">Website Usability Survey</option>
               <option value="category4">Market Research Survey</option>
               <option value="category5">Health and Wellness Survey</option>
+              <option value="category6">Customer Satisfaction Survey</option>
             </select>
           </div>
-          <div className="flex gap-2 justify-evenly">
+          <div className="flex gap-4 justify-evenly">
             <div className="w-full">
               <label className="text-black font-bold outline-none">
                 Created At

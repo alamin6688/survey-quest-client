@@ -28,21 +28,38 @@ const LatestSurveys = () => {
   }
 
   return (
-    <div className="mt-10">
-      <h2 className="text-3xl font-semibold text-center">Latest Surveys</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+    <div className="mt-10 bg-base-200 pt-10 pb-12 rounded-xl">
+      <div>
+        <h2 className="text-4xl font-extrabold text-center">Latest Surveys</h2>
+        <p className="w-full md:w-3/4 mx-auto text-center mt-4 text-lg text-black">
+        We value your feedback on our services and products to improve your experience. Stay updated with us for more things.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 px-4">
         {recentSurveys?.map((survey) => (
-          <div key={survey._id} className="bg-white shadow-lg rounded-lg p-4">
-            <h2 className="text-xl font-semibold mb-2">{survey.title}</h2>
-            <p className="text-gray-700 text-base mb-2">{survey.description}</p>
-            <p className="text-gray-600 text-sm mb-1">
-              Category: {survey.category}
+          <div
+            key={survey._id}
+            className="border-2 rounded-xl shadow-2xl space-y-2 p-4 pb-8"
+          >
+            <img
+              src={survey.image}
+              alt="Survey img"
+              className="w-full h-[250px] object-cover"
+            />
+            <h2 className="text-2xl font-semibold pt-4 pb-4">{survey.title}</h2>
+            <p className="text-gray-700 text-[18px]">
+              <span className="font-bold">Description:</span>{" "}
+              {survey.description}
             </p>
-            <p className="text-gray-600 text-sm mb-1">
-              Votes: {survey.voteCount}
+            <p className="text-gray-700 text-[18px]">
+              <span className="font-bold">Category:</span> {survey.category}
             </p>
-            <p className="text-gray-600 text-sm">
-              Created At: {new Date(survey.createdAt).toLocaleDateString()}
+            <p className="text-gray-700 text-[18px]">
+              <span className="font-bold">Votes:</span> {survey.voteCount}
+            </p>
+            <p className="text-gray-700 text-[18px]">
+              <span className="font-bold">Created At:</span>{" "}
+              {new Date(survey.createdAt).toLocaleDateString()}
             </p>
           </div>
         ))}

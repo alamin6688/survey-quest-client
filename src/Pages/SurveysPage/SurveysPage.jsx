@@ -63,6 +63,7 @@ const SurveysPage = () => {
             <option value="category3">Website Usability Survey</option>
             <option value="category4">Market Research Survey</option>
             <option value="category5">Health and Wellness Survey</option>
+            <option value="category6">Customer Satisfaction Survey</option>
           </select>
         </div>
 
@@ -79,7 +80,7 @@ const SurveysPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 rounded-lg px-4 md:px-0">
         {filteredSurveys?.map((survey) => (
           <div key={survey._id} className="border-2 rounded-xl shadow-xl space-y-2 p-4">
-            <img src="https://i.postimg.cc/SRL9HnGh/austin-distel-744o-Geqpx-PQ-unsplash.jpg" alt="Survey img" />
+            <img src={survey.image} alt="Survey img" className="w-full h-[250px] object-cover"/>
             <h2 className="text-2xl font-bold pt-4 h-[75px]">{survey.title}</h2>
             <p>{survey.description}</p>
             <p>Votes: {survey.voteCount}</p>
