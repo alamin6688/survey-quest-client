@@ -53,29 +53,36 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
       setUser(currentUser);
       console.log("Current User", currentUser);
+      setLoading(false);
 
+      // If user exists then issue a token
       if (currentUser) {
-        const userInfo = {
-          email: currentUser.email,
-          name: currentUser.displayName,
-          role: "user",
-        };
         axiosPublic
-          .post("/users", userInfo)
-          .then(() => setLoading(false))
-          .catch((error) => {
-            console.error("Error posting user to DB", error);
-            setLoading(false); // Ensure loading is set to false even on error
+          .post("/jwt", loggedUser)
+          .then((res) => {
+            console.log("Token Response", res.data);
+          })
+          .catch((err) => {
+            console.error("Error setting token", err);
           });
       } else {
-        setLoading(false);
+        axiosPublic
+          .post("/clear-jwt", loggedUser)
+          .then(() => {
+            // console.log('Sign Out Response', res.data);
+          })
+          .catch((err) => {
+            console.error("Error", err);
+          });
       }
     });
 
     return () => unsubscribe();
-  }, [axiosPublic]);
+  }, [axiosPublic,user?.email]);
 
   const authInfo = {
     user,

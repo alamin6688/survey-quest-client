@@ -9,6 +9,7 @@ import Login from "../Pages/Login/Login";
 import Payments from "../Pages/Payments/Payments";
 import SurveysPage from "../Pages/SurveysPage/SurveysPage";
 import SurveyDetails from "../Pages/SurveyDetails/SurveyDetails";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 
 
   export const router = createBrowserRouter([
@@ -43,4 +44,12 @@ import SurveyDetails from "../Pages/SurveyDetails/SurveyDetails";
         },
       ]
     },
+    {
+      path:'/dashboard',
+      element:<Dashboard></Dashboard>,
+      errorElement: <ErrorPage></ErrorPage>,
+      children:[
+      
+      ]
+    }
   ]);
