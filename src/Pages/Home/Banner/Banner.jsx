@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import img1 from '../../../assets/images/01.jpg';
 import img2 from '../../../assets/images/02.jpg';
 import img3 from '../../../assets/images/03.jpg';
@@ -17,9 +18,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -37,9 +41,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -57,9 +64,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -77,9 +87,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -97,9 +110,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -117,9 +133,12 @@ const Banner = () => {
                 Discover the power of feedback with SurveyQuest. Seamlessly create and analyze surveys to understand opinions, preferences, and experiences.
                 </p>
                 <div>
-                    <button className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
+                    <Link to="/surveys-page">
+                    <button 
+                    className='btn bg-green-600 hover:bg-green-700 text-white mr-5 border-none'>
                     Explore More
                     </button>
+                    </Link>
                 </div>
             </div>
         </div>
