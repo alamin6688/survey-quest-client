@@ -13,8 +13,8 @@ const Navbar = () => {
 
   const navLinks = (
     <>
-      <li><Link to="/" className="font-bold">Home</Link></li>
-      <li><Link to="/surveys-page" className="font-bold">Surveys Page</Link></li>
+      <li><Link to="/" className="font-bold text-green-500">Home</Link></li>
+      <li><Link to="/surveys-page" className="font-bold">Surveys</Link></li>
       <li><Link to="/payment" className="font-bold">Payment</Link></li>
       <li><Link to="/dashboard" className="font-bold">Dashboard</Link></li>
     {

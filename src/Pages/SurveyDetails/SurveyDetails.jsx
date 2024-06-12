@@ -102,7 +102,7 @@ const SurveyDetails = () => {
               type="text"
               name="title"
               defaultValue={currentSurvey?.title}
-              className="w-full"
+              className="input input-bordered w-full"
               readOnly
             />
           </div>
@@ -112,7 +112,7 @@ const SurveyDetails = () => {
               type="text"
               name="description"
               defaultValue={currentSurvey?.description}
-              className="w-full"
+              className="input input-bordered w-full"
               readOnly
             />
           </div>
@@ -122,18 +122,18 @@ const SurveyDetails = () => {
               type="text"
               name="category"
               defaultValue={currentSurvey?.category}
-              className="w-full"
+              className="input input-bordered w-full"
               readOnly
             />
           </div>
-          <div className="flex justify-evenly">
+          <div className="flex gap-2 justify-evenly">
             <div className="w-full">
               <label className="text-black font-bold outline-none">
                 Created At
               </label>
               <input
                 defaultValue={formatDateForInput(currentSurvey?.createdAt)}
-                className="w-full"
+                className="input input-bordered w-full"
                 readOnly
               />
             </div>
@@ -141,7 +141,7 @@ const SurveyDetails = () => {
               <label className="text-black font-bold">Vote Count</label>
               <input
                 defaultValue={currentSurvey?.vote.voteCount}
-                className=" w-full"
+                className="input input-bordered w-full"
                 readOnly
               />
             </div>
@@ -183,8 +183,8 @@ const SurveyDetails = () => {
           <form onSubmit={handleSubmitComment}>
             {isProUser ? (
               <>
-                <div className="w-full mt-14">
-                  <label className="text-black font-bold">Add Comment</label>
+                <div className="w-full mt-4">
+                  <label className="text-black font-bold">Comment</label>
                   <input
                     type="text"
                     name="comment"
@@ -203,7 +203,7 @@ const SurveyDetails = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-full mt-14">
+                    <div className="w-full mt-4">
                       <input
                         type="submit"
                         value="Post Comment"
@@ -221,22 +221,25 @@ const SurveyDetails = () => {
         <div>
           {user ? (
             <form onSubmit={handleReport}>
-              <div className="w-full mt-14">
-              {
-                currentSurvey.reports.reportedUser===user.email?
-                 <input
-                 type="submit"
-                 disabled
-                 value="Reported"
-                 className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600 "
-               />
-               :
-               <input
-               type="submit"
-               value="Report"
-               className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600 "
-             />
-               }
+              <div className="w-full mt-4 space-y-3">
+                <h2 className="text-2xl font-bold ">Report</h2>
+                <p>
+                Report for inappropriate surveys.
+                </p>
+                {currentSurvey.reports.reportedUser === user.email ? (
+                  <input
+                    type="submit"
+                    disabled
+                    value="Reported"
+                    className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600 "
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Report"
+                    className="btn btn-ghost bg-red-500 text-white font-bold hover:bg-red-600 "
+                  />
+                )}
               </div>
             </form>
           ) : (
