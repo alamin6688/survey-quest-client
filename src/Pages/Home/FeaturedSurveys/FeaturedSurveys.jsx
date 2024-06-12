@@ -28,22 +28,38 @@ const FeaturedSurveys = () => {
   }
 
   return (
-    <div className="mt-10">
-      <h2 className="text-3xl font-semibold text-center">Featured Surveys</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+    <div className="mt-10 bg-base-200 pt-10 pb-12 rounded-xl">
+      <div>
+        <h2 className="text-4xl font-extrabold text-center">
+          Featured Surveys
+        </h2>
+        <p className="w-full md:w-3/4 mx-auto text-center mt-4 text-lg text-black">
+          We present significant research projects surveys, emphasizing crucial
+          studies to engage participants and collect valuable insights.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-8 px-4">
         {topSurveys?.map((survey) => (
-          <div key={survey._id} className="bg-white shadow-lg rounded-lg p-4">
-            <h2 className="text-xl font-semibold mb-2">{survey.title}</h2>
-            <p className="text-gray-700 text-base mb-2">{survey.description}</p>
-            <p className="text-gray-600 text-sm mb-1">
-              Category: {survey.category}
-            </p>
-            <p className="text-gray-600 text-sm mb-1">
-              Votes: {survey.voteCount}
-            </p>
-            <p className="text-gray-600 text-sm">
-              Created At: {new Date(survey.createdAt).toLocaleDateString()}
-            </p>
+          <div
+            key={survey._id}
+            className="border-2 rounded-xl shadow-2xl p-4 relative overflow-hidden"
+            style={{
+              backgroundImage: `url(${survey.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "250px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black opacity-30"></div>
+            {/* Gradient Overlay */}
+            <div>
+              <h2 className="absolute bottom-12 text-2xl text-white font-semibold bg-black bg-opacity-0 p-2 rounded">
+                {survey.title}
+              </h2>
+              <p className="absolute bottom-0 left-4 text-white text-base bg-black bg-opacity-0 p-1 rounded">
+                {survey.description}
+              </p>
+            </div>
           </div>
         ))}
       </div>
