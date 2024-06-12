@@ -1,6 +1,4 @@
-import {
-    createBrowserRouter,
-  } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
@@ -10,46 +8,59 @@ import Payments from "../Pages/Payments/Payments";
 import SurveysPage from "../Pages/SurveysPage/SurveysPage";
 import SurveyDetails from "../Pages/SurveyDetails/SurveyDetails";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers";
+import ManageSurveys from "../Pages/Dashboard/AdminDashboard/ManageSurveys";
+import PaymentsAndResponses from "../Pages/Dashboard/AdminDashboard/PaymentsAndResponses";
 
-
-  export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main></Main>,
-      errorElement: <ErrorPage></ErrorPage>,
-      children:[
-        {
-            path: '/',
-            element: <Home></Home>
-        },
-        {
-            path: '/login',
-            element: <Login></Login>
-        },
-        {
-            path: '/signup',
-            element: <Signup></Signup>
-        },
-        {
-            path: '/payment',
-            element: <Payments></Payments>
-        },
-        {
-            path: '/surveys-page',
-            element: <SurveysPage></SurveysPage>
-        },
-        {
-            path: '/survey-details/:id',
-            element: <SurveyDetails></SurveyDetails>
-        },
-      ]
-    },
-    {
-      path:'/dashboard',
-      element:<Dashboard></Dashboard>,
-      errorElement: <ErrorPage></ErrorPage>,
-      children:[
-      
-      ]
-    }
-  ]);
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Main />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/payment",
+        element: <Payments />,
+      },
+      {
+        path: "/surveys-page",
+        element: <SurveysPage />,
+      },
+      {
+        path: "/survey-details/:id",
+        element: <SurveyDetails />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "admin/users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "admin/surveys",
+        element: <ManageSurveys />,
+      },
+      {
+        path: "admin/payments",
+        element: <PaymentsAndResponses />,
+      },
+    ],
+  },
+]);

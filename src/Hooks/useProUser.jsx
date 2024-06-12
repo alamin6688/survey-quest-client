@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 import useAuth from "./useAuth";
-import { useMemo } from "react";
 
 const useProUser = () => {
   const { user } = useAuth();
@@ -11,12 +10,12 @@ const useProUser = () => {
     queryKey: [user?.email, 'isProUser'],
     queryFn: async () => {
       const res = await axiosSecure.get(`users/proUser/${user.email}`);
-      return res.data.proUser;
+      return res.data.proUser; // Assuming 'proUser' is the correct key in the response
     },
-    enabled: !!user?.email,
+    enabled: !!user?.email, // Ensure the query runs only if user.email is available
   });
 
-  return useMemo(() => [isProUser, isProUserLoading], [isProUser, isProUserLoading]);
+  return [isProUser, isProUserLoading];
 };
 
 export default useProUser;

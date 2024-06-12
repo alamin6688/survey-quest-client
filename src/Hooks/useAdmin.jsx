@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
-import { useMemo } from "react";
 
 const useAdmin = () => {
   const { user } = useAuth();
@@ -13,10 +12,10 @@ const useAdmin = () => {
       const res = await axiosSecure.get(`users/admin/${user.email}`);
       return res.data.admin;
     },
-    enabled: !!user?.email,
+    enabled: !!user?.email, // Ensure the query runs only if user.email is available
   });
 
-  return useMemo(() => [isAdmin, isAdminLoading], [isAdmin, isAdminLoading]);
+  return [isAdmin, isAdminLoading];
 };
 
 export default useAdmin;

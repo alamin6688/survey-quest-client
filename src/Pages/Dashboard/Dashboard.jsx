@@ -1,12 +1,10 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { RiSurveyFill } from "react-icons/ri";
-import { RiCoupon2Fill } from "react-icons/ri";
-import { FaTasks } from "react-icons/fa";
 import { GrAnnounce } from "react-icons/gr";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { MdPayments } from "react-icons/md";
-import { FaHistory } from "react-icons/fa";
+import { FaCommentDollar, FaHistory } from "react-icons/fa";
 import useAdmin from "../../Hooks/useAdmin";
 import useProUser from "../../Hooks/useProUser";
 
@@ -30,32 +28,21 @@ console.log(isAdmin,isProUser)
           <div>
             <ul className="menu  flex flex-col md:gap-5 ">
               <li>
-                <NavLink to={`admin-profile`}>
+                <NavLink to={`admin/users`}>
                   <IoHome />
-                  Admin Profile
+                  Manage Users
                 </NavLink>
               </li>
               <li>
-                <NavLink to={`manage-members`}>
+                <NavLink to={`admin/surveys`}>
                   <BsFillPeopleFill />
-                  Manage Members
+                  Manage Surveys
                 </NavLink>
               </li>
               <li>
-                <NavLink to={`manage-announcement`}>
-                  <GrAnnounce />
-                  Make Announcement
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to={`agreement-requests`}>
-                  <FaTasks /> Agreement Requests
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to={`manage-coupons`}>
-                  <RiCoupon2Fill />
-                  Manage Coupons
+                <NavLink to={`admin/payments`}>
+                  <FaCommentDollar />
+                  Payments
                 </NavLink>
               </li>
             </ul>
