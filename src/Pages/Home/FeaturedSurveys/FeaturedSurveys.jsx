@@ -28,7 +28,7 @@ const FeaturedSurveys = () => {
   }
 
   return (
-    <div className="mt-10 bg-base-200 pt-10 pb-12 rounded-xl">
+    <div className="bg-base-200 pt-10 pb-12 rounded-xl">
       <div>
         <h2 className="text-4xl font-extrabold text-center">
           Featured Surveys

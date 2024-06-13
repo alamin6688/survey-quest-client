@@ -11,6 +11,8 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageSurveys from "../Pages/Dashboard/AdminDashboard/ManageSurveys";
 import PaymentsAndResponses from "../Pages/Dashboard/AdminDashboard/PaymentsAndResponses";
+import SurveyorDashboard from "../Pages/SurveyorDashboard/SurveyorDashboard";
+import AddSurvey from "../Pages/SurveyorDashboard/AddSurvey";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ export const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payments />,
+      },
+      {
+        path: "/surveyor-dashboard",
+        element: <SurveyorDashboard />,
+      },
+      {
+        path: "/addSurvey",
+        element: <AddSurvey />,
       },
       {
         path: "/surveys-page",

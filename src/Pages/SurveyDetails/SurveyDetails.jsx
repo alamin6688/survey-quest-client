@@ -12,6 +12,7 @@ const SurveyDetails = () => {
   const axiosPublic = useAxiosPublic();
   const [isProUser] = useProUser();
   const [category, setCategory] = useState("");
+//   const [selectedOption, setSelectedOption] = useState('');
 
   const {
     data: surveys,
@@ -83,6 +84,21 @@ const SurveyDetails = () => {
       }
     });
   };
+
+    // Function to handle form submission
+    // const handleSubmit2 = (event) => {
+    //     event.preventDefault(); // Prevent the default form submission behavior
+    //     const formData = {
+    //       choice: selectedOption
+    //     };
+    //     console.log(formData); // Log the form data to the console
+    //   };
+    
+    //   // Function to handle changes in the radio buttons
+    //   const handleChange = (event) => {
+    //     setSelectedOption(event.target.value); // Update state with the selected radio button value
+    //   };
+
 
   const handleReport = () => {
     const newReport = {
@@ -240,6 +256,45 @@ const SurveyDetails = () => {
             </form>
           )}
         </div>
+
+        {/* Chhat GPT
+        <div className="flex justify-center items-center bg-gray-100">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full">
+            <form onSubmit={handleSubmit2}>
+              <div className="mb-4 space-y-4">
+                <p className="text-lg font-semibold mb-2">What do you want?</p>
+                <div className="flex items-center">
+                <input 
+                type="radio" 
+                name="radio-1" 
+                value="Comment" 
+                className="radio" 
+                onChange={handleChange} 
+                defaultChecked 
+              />
+                  <label className="ml-2">Comment</label>
+                </div>
+                <div className="flex items-center">
+                <input 
+                type="radio" 
+                name="radio-1" 
+                value="Report" 
+                className="radio" 
+                onChange={handleChange} 
+              />
+                  <label className="ml-2">Report</label>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div> */}
+        
       </div>
     </div>
   );
