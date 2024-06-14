@@ -55,8 +55,8 @@ const SurveyorDashboard = () => {
               >
                 Edit
               </Link>
-              <Link to={`/survey-details/${survey._id}`} className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600">
-              View Details
+              <Link to={`participate-details/${survey._id}`} className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600">
+               Details
             </Link>
             </div>
           </div>

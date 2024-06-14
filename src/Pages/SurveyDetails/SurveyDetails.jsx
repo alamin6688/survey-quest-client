@@ -46,21 +46,28 @@ const SurveyDetails = () => {
     e.preventDefault();
     const newVote = {
       voteCount: currentSurvey.voteCount + 1,
+      votedUserName: user.displayName,
+      votedUserEmail: user.email,
+      surveyId: currentSurvey._id,
+      usersVote: "yes",
     };
-    axiosPublic.put(`/surveys/${currentSurvey._id}/vote`, newVote)
-    .then((res) => {
-      console.log(res.data)
-      if (res.data.modifiedCount > 0) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Vote Added",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+    axiosPublic
+      .put(`/surveys/${currentSurvey._id}/vote`, newVote)
+      .then((res) => {
         refetch();
-      }
-    });
+        console.log(res.data);
+        if (res.data) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Vote Added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          e.target.reset();
+          refetch();
+        }
+      });
   };
 
   const formatDateForInput = (dateString) => {
@@ -75,7 +82,7 @@ const SurveyDetails = () => {
     e.preventDefault();
     const comment = e.target.comment.value;
     const newData = {
-      commentedText:comment,
+      commentedText: comment,
       commentedUser: user.email,
       surveyId: currentSurvey._id,
     };
@@ -87,7 +94,7 @@ const SurveyDetails = () => {
           icon: "success",
           title: "Comment Added",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         e.target.reset();
         refetch();
@@ -99,7 +106,7 @@ const SurveyDetails = () => {
     e.preventDefault();
     const report = e.target.report.value;
     const newReport = {
-      reportedText:report,
+      reportedText: report,
       reportedUser: user.email,
       surveyId: currentSurvey._id,
     };
@@ -111,7 +118,7 @@ const SurveyDetails = () => {
           icon: "success",
           title: "Reported",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         e.target.reset();
         refetch();
@@ -214,25 +221,24 @@ const SurveyDetails = () => {
           </form>
         )}
         <div>
-
-            <form onSubmit={handleReport}>
-              <div className="w-full mt-4 space-y-3">
+          <form onSubmit={handleReport}>
+            <div className="w-full mt-4 space-y-3">
               <div className="w-full mt-4">
-              <label className="text-black font-bold">Report</label>
-              <input
-                type="text"
-                name="report"
-                placeholder="Add your report..."
-                className="input input-bordered w-full h-24"
-              />
-            </div>
+                <label className="text-black font-bold">Report</label>
                 <input
-                  type="submit"
-                  value="Report"
-                  className="btn btn-ghost bg-red-500 text-white font-bold hover:bg-red-600"
+                  type="text"
+                  name="report"
+                  placeholder="Add your report..."
+                  className="input input-bordered w-full h-24"
                 />
               </div>
-            </form>
+              <input
+                type="submit"
+                value="Report"
+                className="btn btn-ghost bg-red-500 text-white font-bold hover:bg-red-600"
+              />
+            </div>
+          </form>
         </div>
       </div>
     </div>

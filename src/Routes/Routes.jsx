@@ -16,6 +16,9 @@ import SurveyorDashboard from '../Pages/Dashboard/SurveyorDashboard/SurveyorDash
 import UpdateSurvey from '../Pages/Dashboard/SurveyorDashboard/UpdateSurvey'
 import ReportedSurveys from "../Pages/Dashboard/UserDashBoard/ReportedSurveys";
 import MyComments from "../Pages/Dashboard/UserDashBoard/MyComments";
+import ParticipateDetails from "../Pages/Dashboard/SurveyorDashboard/ParticipateDetails";
+
+
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: "my-comments",
         element: <MyComments />,
+      },
+      {
+        path: "SurveyorDashboard/participate-details/:id",
+        element: <ParticipateDetails/>,
       },
       {
         path: "SurveyorDashboard",
