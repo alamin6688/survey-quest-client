@@ -1,22 +1,19 @@
-import { useState } from "react";
-import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 const UpdateSurvey = () => {
   const { id } = useParams();
-  const { user } = useAuth();
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [count, setCount] = useState(0);
-  const [error, setError] = useState("");
   const axiosPublic = useAxiosPublic();
+  const [currentSurvey, setCurrentSurvey] = useState(null);
 
-  const { data: surveys = [] } = useQuery({
+  const {
+    data: surveys = [],
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["surveys"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/surveys`);
@@ -24,43 +21,33 @@ const UpdateSurvey = () => {
     },
   });
 
-  const currentSurvey = surveys.filter((survey) => survey._id === id);
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-  const handleImageChange = (event) => {
-    setImage(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleDeadlineChange = (event) => {
-    setDeadline(event.target.value);
-  };
-
-  const handleRadioChange = (event) => {
-    setCount(event.target.value === "yes" ? 1 : 0);
-  };
-
-  const validateForm = () => {
-    if (!title || !description || !category || !deadline) {
-      setError("All fields are required");
-      return false;
+  useEffect(() => {
+    if (surveys.length) {
+      const survey = surveys.find((survey) => survey._id === id);
+      setCurrentSurvey(survey);
     }
-    setError("");
-    return true;
-  };
+  }, [surveys, id]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!validateForm()) return;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading survey: {error.message}</div>;
+  }
+
+  if (!currentSurvey) {
+    return <div>No survey found</div>;
+  }
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const image = form.image.value;
+    const title = form.title.value;
+    const description = form.description.value;
+    const category = form.category.value;
+    const deadline = form.deadline.value;
 
     const survey = {
       image,
@@ -68,14 +55,19 @@ const UpdateSurvey = () => {
       description,
       category,
       deadline,
-      status: "publish",
-      createdAt: new Date().toISOString().split("T")[0],
-      voteCount: count,
-      surverior: user.email,
     };
 
-    // Send formData to your server endpoint
-    axiosPublic.post("/surveys", survey);
+    axiosPublic.patch(`/surveys/${currentSurvey._id}`, survey).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Updated",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   return (
@@ -83,15 +75,13 @@ const UpdateSurvey = () => {
       <h2 className="text-3xl text-center font-extrabold mb-6">
         Update Survey
       </h2>
-      {error && <p className="text-red-500 text-center">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleUpdate} className="space-y-4">
         <div className="w-full">
           <label className="text-black font-bold">Survey Title</label>
           <input
             type="text"
             name="title"
-            value={currentSurvey.title}
-            onChange={handleTitleChange}
+            defaultValue={currentSurvey.title}
             placeholder="Enter your survey title"
             className="input input-bordered w-full"
           />
@@ -101,8 +91,7 @@ const UpdateSurvey = () => {
           <input
             type="text"
             name="description"
-            value={currentSurvey.description}
-            onChange={handleDescriptionChange}
+            defaultValue={currentSurvey.description}
             placeholder="Enter Description"
             className="input input-bordered w-full"
           />
@@ -110,8 +99,8 @@ const UpdateSurvey = () => {
         <div className="w-full">
           <label className="text-black font-bold">Survey Category</label>
           <select
-            value={currentSurvey.category}
-            onChange={handleCategoryChange}
+            name="category"
+            defaultValue={currentSurvey.category}
             className="input input-bordered w-full"
           >
             <option value="">Select a category</option>
@@ -142,8 +131,7 @@ const UpdateSurvey = () => {
           <input
             type="date"
             name="deadline"
-            value={currentSurvey.deadline}
-            onChange={handleDeadlineChange}
+            defaultValue={currentSurvey.deadline}
             className="input input-bordered w-full"
           />
         </div>
@@ -152,45 +140,18 @@ const UpdateSurvey = () => {
           <input
             type="text"
             name="image"
-            value={currentSurvey.image}
-            onChange={handleImageChange}
+            defaultValue={currentSurvey.image}
             placeholder="Enter your survey image URL"
             className="input input-bordered w-full"
           />
         </div>
-        <div className="mb-4 space-y-4">
-          <div className="space-y-4">
-            <p className="text-lg font-semibold mb-2">
-              Is this Survey helpful?
-            </p>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                name="radio-1"
-                value="yes"
-                className="radio"
-                onChange={handleRadioChange}
-              />
-              <label className="ml-2">Yes</label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                name="radio-1"
-                value="no"
-                className="radio"
-                onChange={handleRadioChange}
-              />
-              <label className="ml-2">No</label>
-            </div>
-          </div>
-        </div>
+
         <div className="w-full">
           <button
             type="submit"
             className="mt-4 w-full bg-green-500 text-white py-2 px-4 rounded text-xl hover:bg-green-600 font-bold"
           >
-            Submit
+            Update
           </button>
         </div>
       </form>
