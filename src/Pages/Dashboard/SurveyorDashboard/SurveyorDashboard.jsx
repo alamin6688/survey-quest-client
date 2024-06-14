@@ -51,10 +51,13 @@ const SurveyorDashboard = () => {
             <div className="flex justify-between">
               <Link
                 to={`/surveys/edit/${survey._id}`}
-                className="btn btn-secondary w-full"
+                className="btn btn-secondary "
               >
                 Edit
               </Link>
+              <Link to={`/survey-details/${survey._id}`} className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600">
+              View Details
+            </Link>
             </div>
           </div>
         ))}

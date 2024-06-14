@@ -22,18 +22,12 @@ const SurveysPage = () => {
       });
   }, []);
 
-  // Filter surveys by category
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-    filterSurveys(e.target.value, sortOption);
-  };
+  // Filter and sort surveys whenever the category or sort option changes
+  useEffect(() => {
+    filterSurveys(category, sortOption);
+  }, [category, sortOption, surveys]);
 
-  // Sort surveys by vote count or date
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-    filterSurveys(category, e.target.value);
-  };
-
+  // Filter surveys by category and sort them
   const filterSurveys = (category, sortOption) => {
     let filtered = [...surveys];
 
@@ -50,11 +44,13 @@ const SurveysPage = () => {
     setFilteredSurveys(filtered);
   };
 
+  const publishedSurveys = filteredSurveys.filter((survey) => survey.status === "publish");
+
   return (
     <div className="mb-12">
       <div className="filters md:flex flex-col text-center justify-center items-center gap-2 mt-4 mb-6 md:text-xl font-bold">
         <div>
-          <select value={category} onChange={handleCategoryChange}>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="" className="text-center">
               All Categories
             </option>
@@ -68,7 +64,7 @@ const SurveysPage = () => {
         </div>
 
         <div>
-          <select value={sortOption} onChange={handleSortChange}>
+          <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
             <option value="latest" className="text-center">
               Latest
             </option>
@@ -78,9 +74,9 @@ const SurveysPage = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 rounded-lg px-4 md:px-0">
-        {filteredSurveys?.map((survey) => (
+        {publishedSurveys.map((survey) => (
           <div key={survey._id} className="border-2 rounded-xl shadow-xl space-y-2 p-4">
-            <img src={survey.image} alt="Survey img" className="w-full h-[250px] object-cover"/>
+            <img src={survey.image} alt="Survey img" className="w-full h-[250px] object-cover" />
             <h2 className="text-2xl font-bold pt-4 h-[75px]">{survey.title}</h2>
             <p>{survey.description}</p>
             <p>Votes: {survey.voteCount}</p>

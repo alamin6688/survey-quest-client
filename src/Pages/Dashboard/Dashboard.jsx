@@ -3,8 +3,7 @@ import { IoHome } from "react-icons/io5";
 import { RiSurveyFill } from "react-icons/ri";
 import { GrAnnounce } from "react-icons/gr";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { MdPayments } from "react-icons/md";
-import { FaCommentDollar, FaHistory } from "react-icons/fa";
+import { FaCommentDollar } from "react-icons/fa";
 import useAdmin from "../../Hooks/useAdmin";
 import useProUser from "../../Hooks/useProUser";
 import useSurveyor from "../../Hooks/useSurveyor";
@@ -53,40 +52,6 @@ const Dashboard = () => {
                   <NavLink to={`admin/payments`}>
                     <FaCommentDollar />
                     Payments
-                  </NavLink>
-                </li>
-              </ul>
-              <hr className="w-full mx-auto md:my-5 hidden md:block" />
-            </div>
-          )}
-        </div>
-
-        <div>
-          {isProUser && (
-            <div>
-              <ul className="menu  flex flex-col md:gap-5 ">
-                <li>
-                  <NavLink to={`my-profile`}>
-                    <IoHome />
-                    My Profile
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`make-payment`}>
-                    <MdPayments />
-                    Make Payment
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`payment-history`}>
-                    <FaHistory />
-                    Payment History
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`announcements`}>
-                    <GrAnnounce />
-                    Announcements
                   </NavLink>
                 </li>
               </ul>

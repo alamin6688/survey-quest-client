@@ -53,7 +53,7 @@ const CheckoutFrom = ({ currentUser, toPay}) => {
                 });
                 setPaymentSuccessfull(true)
                 setTimeout(() => {
-                    navigate(`/dashboard`)
+                    navigate(`/`)
                 }, 2000);
             } else {
                 Swal.fire({
