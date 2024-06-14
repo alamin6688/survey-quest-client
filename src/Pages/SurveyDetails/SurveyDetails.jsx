@@ -214,7 +214,7 @@ const SurveyDetails = () => {
           </form>
         )}
         <div>
-          {(isProUser || isAdmin) && (
+
             <form onSubmit={handleReport}>
               <div className="w-full mt-4 space-y-3">
               <div className="w-full mt-4">
@@ -226,7 +226,6 @@ const SurveyDetails = () => {
                 className="input input-bordered w-full h-24"
               />
             </div>
-
                 <input
                   type="submit"
                   value="Report"
@@ -234,7 +233,6 @@ const SurveyDetails = () => {
                 />
               </div>
             </form>
-          )}
         </div>
       </div>
     </div>

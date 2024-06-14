@@ -14,6 +14,7 @@ import PaymentsAndResponses from "../Pages/Dashboard/AdminDashboard/PaymentsAndR
 import AddSurvey from '../Pages/Dashboard/SurveyorDashboard/AddSurvey'
 import SurveyorDashboard from '../Pages/Dashboard/SurveyorDashboard/SurveyorDashboard'
 import UpdateSurvey from '../Pages/Dashboard/SurveyorDashboard/UpdateSurvey'
+import ReportedSurveys from "../Pages/Dashboard/UserDashBoard/ReportedSurveys";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "/surveys-page",
         element: <SurveysPage />,
+      },
+      {
+        path: "/reported-surveys",
+        element: <ReportedSurveys />,
       },
       {
         path: "/survey-details/:id",

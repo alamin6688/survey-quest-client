@@ -21,9 +21,7 @@ const SurveyorDashboard = () => {
     (survey) => survey.surverior === user?.email
   );
 
-  const handleDelete = async (id) => {
-  console.log(id)
-  };
+
 
   return (
     <div className="w-full py-8 px-4">
@@ -53,16 +51,10 @@ const SurveyorDashboard = () => {
             <div className="flex justify-between">
               <Link
                 to={`/surveys/edit/${survey._id}`}
-                className="btn btn-secondary"
+                className="btn btn-secondary w-full"
               >
                 Edit
               </Link>
-              <button
-                onClick={() => handleDelete(survey._id)}
-                className="btn btn-danger"
-              >
-                Delete
-              </button>
             </div>
           </div>
         ))}

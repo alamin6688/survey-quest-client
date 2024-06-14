@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AddSurvey = () => {
   const {user}=useAuth();
@@ -63,6 +64,18 @@ const AddSurvey = () => {
 
     // Send formData to your server endpoint
   axiosPublic.post('/surveys', survey)
+  .then(res=>{
+    if (res) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Added",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      event.target.reset();
+    }
+  })
   };
 
   return (

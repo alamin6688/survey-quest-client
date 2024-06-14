@@ -122,7 +122,7 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={``}>
+                  <NavLink to={`/reported-surveys`}>
                     <GrAnnounce />
                     Reported Surveys
                   </NavLink>

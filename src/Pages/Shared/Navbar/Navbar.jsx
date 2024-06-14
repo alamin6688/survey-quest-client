@@ -17,7 +17,7 @@ const Navbar = () => {
       <li><Link to="/surveys-page" className="font-bold">Surveys</Link></li>
       <li><Link to="/payment" className="font-bold">Payment</Link></li>
       <li><Link to="/dashboard" className="font-bold">Dashboard</Link></li>
-      <li><Link to="/surveyor-dashboard" className="font-bold">Surveyor Dashboard</Link></li>
+      <li><Link to="/addSurvey" className="font-bold">Add Survey</Link></li>
     {
       user? <>
       <li><Link onClick={handleLogout} className="font-bold">Logout</Link></li>
