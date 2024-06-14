@@ -1,15 +1,23 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AddSurvey = () => {
+  const {user}=useAuth();
   const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState("");
+  const axiosPublic=useAxiosPublic()
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+  };
+  const handleImageChange = (event) => {
+    setImage(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -25,31 +33,42 @@ const AddSurvey = () => {
   };
 
   const handleRadioChange = (event) => {
-    setSelectedOption(event.target.value);
+    setCount(event.target.value === "yes" ? 1 : 0);
+  };
+
+  const validateForm = () => {
+    if (!title || !description || !category || !deadline) {
+      setError("All fields are required");
+      return false;
+    }
+    setError("");
+    return true;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
+    if (!validateForm()) return;
+
+    const survey = {
+      image,
       title,
       description,
       category,
       deadline,
-      choice: selectedOption,
+      status: "publish",
+      createdAt: new Date().toISOString().split('T')[0],
+      voteCount: count,
+      surverior: user.email,
     };
-    console.log(formData);
-    Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Survey Added successfully!",
-        showConfirmButton: false,
-        timer: 1500
-      });
+
+    // Send formData to your server endpoint
+  axiosPublic.post('/surveys', survey)
   };
 
   return (
     <div className="w-full bg-base-200 rounded-xl mt-6 mb-16 py-8 px-4">
       <h2 className="text-3xl text-center font-extrabold mb-6">Add New Survey</h2>
+      {error && <p className="text-red-500 text-center">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="w-full">
           <label className="text-black font-bold">Survey Title</label>
@@ -80,7 +99,7 @@ const AddSurvey = () => {
             onChange={handleCategoryChange}
             className="input input-bordered w-full"
           >
-            <option>Select a category</option>
+            <option value="">Select a category</option>
             <option value="Employee Engagement Survey">Employee Engagement Survey</option>
             <option value="Product Feedback Survey">Product Feedback Survey</option>
             <option value="Website Usability Survey">Website Usability Survey</option>
@@ -99,14 +118,25 @@ const AddSurvey = () => {
             className="input input-bordered w-full"
           />
         </div>
+        <div className="w-full">
+          <label className="text-black font-bold">Survey Image URL</label>
+          <input
+            type="text"
+            name="image"
+            value={image}
+            onChange={handleImageChange}
+            placeholder="Enter your survey image URL"
+            className="input input-bordered w-full"
+          />
+        </div>
         <div className="mb-4 space-y-4">
           <div className="space-y-4">
-            <p className="text-lg font-semibold mb-2">Will the survey be helpful?</p>
+            <p className="text-lg font-semibold mb-2">Is this Survey helpful?</p>
             <div className="flex items-center">
               <input
                 type="radio"
                 name="radio-1"
-                value="Yes"
+                value="yes"
                 className="radio"
                 onChange={handleRadioChange}
               />
@@ -116,7 +146,7 @@ const AddSurvey = () => {
               <input
                 type="radio"
                 name="radio-1"
-                value="No"
+                value="no"
                 className="radio"
                 onChange={handleRadioChange}
               />

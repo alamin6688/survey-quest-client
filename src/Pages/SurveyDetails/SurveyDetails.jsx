@@ -4,15 +4,16 @@ import { Link, useParams } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useProUser from "../../Hooks/useProUser";
-import { useState } from "react";
+import useAdmin from "../../Hooks/useAdmin";
+import Swal from "sweetalert2";
 
 const SurveyDetails = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
   const [isProUser] = useProUser();
-  const [category, setCategory] = useState("");
-//   const [selectedOption, setSelectedOption] = useState('');
+  const [isAdmin] = useAdmin();
+  //   const [selectedOption, setSelectedOption] = useState('');
 
   const {
     data: surveys,
@@ -41,21 +42,22 @@ const SurveyDetails = () => {
     return <div className="p-4">Survey not found</div>;
   }
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleVoteSubmit = async (e) => {
     e.preventDefault();
-    const newInfo = {
-      voteCount: currentSurvey.vote.voteCount + 1,
-      votedUser: user.email,
-      id: currentSurvey._id,
+    const newVote = {
+      voteCount: currentSurvey.voteCount + 1,
     };
-    console.log(newInfo);
-
-    axiosPublic.put(`/surveys`, newInfo).then((res) => {
+    axiosPublic.put(`/surveys/${currentSurvey._id}/vote`, newVote)
+    .then((res) => {
+      console.log(res.data)
       if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Vote Added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         refetch();
       }
     });
@@ -73,41 +75,45 @@ const SurveyDetails = () => {
     e.preventDefault();
     const comment = e.target.comment.value;
     const newData = {
-      comment,
+      commentedText:comment,
       commentedUser: user.email,
-      id: currentSurvey._id,
+      surveyId: currentSurvey._id,
     };
     console.log(newData);
-    axiosPublic.put(`/surveys/comment`, newData).then((res) => {
-      if (res.data.modifiedCount > 0) {
+    axiosPublic.post(`/comments`, newData).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Comment Added",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        e.target.reset();
         refetch();
       }
     });
   };
 
-    // Function to handle form submission
-    // const handleSubmit2 = (event) => {
-    //     event.preventDefault(); // Prevent the default form submission behavior
-    //     const formData = {
-    //       choice: selectedOption
-    //     };
-    //     console.log(formData); // Log the form data to the console
-    //   };
-    
-    //   // Function to handle changes in the radio buttons
-    //   const handleChange = (event) => {
-    //     setSelectedOption(event.target.value); // Update state with the selected radio button value
-    //   };
-
-
-  const handleReport = () => {
+  const handleReport = (e) => {
+    e.preventDefault();
+    const report = e.target.report.value;
     const newReport = {
+      reportedText:report,
       reportedUser: user.email,
-      id: currentSurvey._id,
+      surveyId: currentSurvey._id,
     };
     console.log(newReport);
-    axiosPublic.put(`/surveys/report`, newReport).then((res) => {
-      if (res.data.modifiedCount > 0) {
+    axiosPublic.post(`/reports`, newReport).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Reported",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        e.target.reset();
         refetch();
       }
     });
@@ -117,7 +123,7 @@ const SurveyDetails = () => {
     <div className="mt-10 bg-base-200 shadow-lg rounded-lg overflow-hidden pt-8 pb-4 md:px-8 mb-16">
       <h2 className="text-4xl text-center font-bold mb-4">Enter Your Survey</h2>
       <div className="p-5">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleVoteSubmit} className="space-y-4">
           <div className="w-full">
             <label className="text-black font-bold">Survey Title</label>
             <input
@@ -140,21 +146,23 @@ const SurveyDetails = () => {
           </div>
           <div className="w-full">
             <label className="text-black font-bold">Survey Category</label>
-            <select
-              value={category || currentSurvey?.category}
-              onChange={handleCategoryChange}
+            <input
+              type="text"
+              name="description"
+              value={currentSurvey?.category}
               className="input input-bordered w-full"
-            >
-              <option>{currentSurvey?.category}</option>
-              <option value="category1">Employee Engagement Survey</option>
-              <option value="category2">Product Feedback Survey</option>
-              <option value="category3">Website Usability Survey</option>
-              <option value="category4">Market Research Survey</option>
-              <option value="category5">Health and Wellness Survey</option>
-              <option value="category6">Customer Satisfaction Survey</option>
-            </select>
+              readOnly
+            />
           </div>
           <div className="flex gap-4 justify-evenly">
+            <div className="w-full">
+              <label className="text-black font-bold">Vote Count</label>
+              <input
+                defaultValue={currentSurvey?.voteCount}
+                className="input input-bordered w-full"
+                readOnly
+              />
+            </div>
             <div className="w-full">
               <label className="text-black font-bold outline-none">
                 Created At
@@ -165,33 +173,15 @@ const SurveyDetails = () => {
                 readOnly
               />
             </div>
-            <div className="w-full">
-              <label className="text-black font-bold">Vote Count</label>
-              <input
-                defaultValue={currentSurvey?.vote.voteCount}
-                className="input input-bordered w-full"
-                readOnly
-              />
-            </div>
           </div>
           <div className="w-full">
             {user ? (
               <div>
-                {currentSurvey.vote.votedUser === user.email ? (
-                  <button
-                    disabled
-                    type="submit"
-                    className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
-                  >
-                    Already Voted
-                  </button>
-                ) : (
-                  <input
-                    type="submit"
-                    value="Vote Now"
-                    className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
-                  />
-                )}
+                <input
+                  type="submit"
+                  value="Vote Now"
+                  className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
+                />
               </div>
             ) : (
               <Link
@@ -203,7 +193,7 @@ const SurveyDetails = () => {
             )}
           </div>
         </form>
-        {isProUser && (
+        {(isProUser || isAdmin) && (
           <form onSubmit={handleSubmitComment}>
             <div className="w-full mt-4">
               <label className="text-black font-bold">Comment</label>
@@ -215,86 +205,37 @@ const SurveyDetails = () => {
               />
             </div>
             <div className="w-full mt-4">
-              {currentSurvey.comments.commentedUser === user.email ? (
-                <input
-                  type="submit"
-                  disabled
-                  value="Already Commented"
-                  className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
-                />
-              ) : (
-                <input
-                  type="submit"
-                  value="Post Comment"
-                  className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
-                />
-              )}
+              <input
+                type="submit"
+                value="Post Comment"
+                className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
+              />
             </div>
           </form>
         )}
         <div>
-          {user && (
+          {(isProUser || isAdmin) && (
             <form onSubmit={handleReport}>
               <div className="w-full mt-4 space-y-3">
-                <h2 className="text-2xl font-bold">Report</h2>
-                <p>Report for inappropriate surveys.</p>
-                {currentSurvey.reports.reportedUser === user.email ? (
-                  <input
-                    type="submit"
-                    disabled
-                    value="Reported"
-                    className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
-                  />
-                ) : (
-                  <input
-                    type="submit"
-                    value="Report"
-                    className="btn btn-ghost bg-red-500 text-white font-bold hover:bg-red-600"
-                  />
-                )}
+              <div className="w-full mt-4">
+              <label className="text-black font-bold">Report</label>
+              <input
+                type="text"
+                name="report"
+                placeholder="Add your report..."
+                className="input input-bordered w-full h-24"
+              />
+            </div>
+
+                <input
+                  type="submit"
+                  value="Report"
+                  className="btn btn-ghost bg-red-500 text-white font-bold hover:bg-red-600"
+                />
               </div>
             </form>
           )}
         </div>
-
-        {/* Chhat GPT
-        <div className="flex justify-center items-center bg-gray-100">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full">
-            <form onSubmit={handleSubmit2}>
-              <div className="mb-4 space-y-4">
-                <p className="text-lg font-semibold mb-2">What do you want?</p>
-                <div className="flex items-center">
-                <input 
-                type="radio" 
-                name="radio-1" 
-                value="Comment" 
-                className="radio" 
-                onChange={handleChange} 
-                defaultChecked 
-              />
-                  <label className="ml-2">Comment</label>
-                </div>
-                <div className="flex items-center">
-                <input 
-                type="radio" 
-                name="radio-1" 
-                value="Report" 
-                className="radio" 
-                onChange={handleChange} 
-              />
-                  <label className="ml-2">Report</label>
-                </div>
-              </div>
-              <button
-                type="submit"
-                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </div> */}
-        
       </div>
     </div>
   );
