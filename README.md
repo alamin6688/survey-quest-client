@@ -20,14 +20,6 @@
 <p><strong>🔸Alerts and Notifications</strong></p>
 <p><strong>🔸Data Visualization</strong></p>
 
-
-<h2><strong>## NPM Package Used
-</strong>Helmet</h2>
-</strong>Axios</h2>
-
-<p><strong></strong></p>
-
-
 <h2><strong>##  Selected Category Name
 </strong></h2>
 
