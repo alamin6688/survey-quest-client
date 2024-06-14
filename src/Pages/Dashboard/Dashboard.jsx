@@ -1,13 +1,14 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { RiSurveyFill } from "react-icons/ri";
-import { GrAnnounce } from "react-icons/gr";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaCommentDollar } from "react-icons/fa";
 import useAdmin from "../../Hooks/useAdmin";
 import useProUser from "../../Hooks/useProUser";
 import useSurveyor from "../../Hooks/useSurveyor";
 import useUser from "../../Hooks/useUser";
+import { FaPeopleRobbery } from "react-icons/fa6";
+import { MdReport } from "react-icons/md";
 
 const Dashboard = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
@@ -31,7 +32,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col md:flex-row md:gap-5">
       {/* Dashboard sidebar */}
-      <div className="flex flex-row md:flex-col justify-between md:justify-start md:w-64 md:min-h-screen bg-blue-400">
+      <div className="flex flex-row md:flex-col font-semibold justify-between md:justify-start md:w-64 md:min-h-screen bg-[#262e42] text-white">
         <div>
           {isAdmin && (
             <div>
@@ -65,7 +66,7 @@ const Dashboard = () => {
             <div>
             <ul className="menu  flex flex-col md:gap-5 ">
               <li>
-                <NavLink to={`/SurveyorDashboard`}>
+                <NavLink to={`SurveyorDashboard`}>
                   <IoHome />
                   Manage My Survays
                 </NavLink>
@@ -77,18 +78,48 @@ const Dashboard = () => {
         </div>
 
         <div>
-          {isUser && (
-            <div>
+          {
+            isProUser &&(
+              <div>
               <ul className="menu  flex flex-col md:gap-5 ">
                 <li>
-                  <NavLink to={`/surveys-page`}>
-                    <IoHome />
+                  <NavLink to={`surveys-page`}>
+                    <FaPeopleRobbery  />
                     Participate in Surveys
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/reported-surveys`}>
-                    <GrAnnounce />
+                  <NavLink to={`reported-surveys`}>
+                    <MdReport  />
+                    Reported Surveys
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={`my-comments`}>
+                    <MdReport  />
+                    My Comments
+                  </NavLink>
+                </li>
+              </ul>
+              <hr className="w-full mx-auto md:my-5 hidden md:block" />
+            </div>
+            )
+          }
+        </div>
+
+        <div>
+          {isUser && (
+            <div>
+              <ul className="menu  flex flex-col md:gap-5 ">
+                <li>
+                  <NavLink to={`surveys-page`}>
+                    <FaPeopleRobbery  />
+                    Participate in Surveys
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={`reported-surveys`}>
+                    <MdReport  />
                     Reported Surveys
                   </NavLink>
                 </li>

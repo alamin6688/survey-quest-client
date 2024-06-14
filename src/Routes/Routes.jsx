@@ -15,6 +15,7 @@ import AddSurvey from '../Pages/Dashboard/SurveyorDashboard/AddSurvey'
 import SurveyorDashboard from '../Pages/Dashboard/SurveyorDashboard/SurveyorDashboard'
 import UpdateSurvey from '../Pages/Dashboard/SurveyorDashboard/UpdateSurvey'
 import ReportedSurveys from "../Pages/Dashboard/UserDashBoard/ReportedSurveys";
+import MyComments from "../Pages/Dashboard/UserDashBoard/MyComments";
 
 export const router = createBrowserRouter([
   {
@@ -39,10 +40,6 @@ export const router = createBrowserRouter([
         element: <Payments />,
       },
       {
-        path: "/SurveyorDashboard",
-        element: <SurveyorDashboard />,
-      },
-      {
         path: "/addSurvey",
         element: <AddSurvey></AddSurvey>,
       },
@@ -53,10 +50,6 @@ export const router = createBrowserRouter([
       {
         path: "/surveys-page",
         element: <SurveysPage />,
-      },
-      {
-        path: "/reported-surveys",
-        element: <ReportedSurveys />,
       },
       {
         path: "/survey-details/:id",
@@ -76,6 +69,22 @@ export const router = createBrowserRouter([
       {
         path: "admin/surveys",
         element: <ManageSurveys />,
+      },
+      {
+        path: "surveys-page",
+        element: <SurveysPage />,
+      },
+      {
+        path: "reported-surveys",
+        element: <ReportedSurveys />,
+      },
+      {
+        path: "my-comments",
+        element: <MyComments />,
+      },
+      {
+        path: "SurveyorDashboard",
+        element: <SurveyorDashboard />,
       },
       {
         path: "admin/payments",

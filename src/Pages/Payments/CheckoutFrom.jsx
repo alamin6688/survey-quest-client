@@ -24,7 +24,7 @@ const CheckoutFrom = ({ currentUser, toPay}) => {
             type: 'card',
             card: cardElement,
             billing_details: {
-                email: currentUser.email,
+                email: currentUser?.email,
             },
         });
 
@@ -38,7 +38,7 @@ const CheckoutFrom = ({ currentUser, toPay}) => {
             const paymentData = {
                 amount: toPay,
                 paymentMethodId: paymentMethod.id,
-                email: currentUser.email,
+                email: currentUser?.email,
                 paymentAt: new Date().toISOString().split('T')[0],
             }
             const response = await axiosPublic.post('/payments', paymentData);
@@ -52,6 +52,7 @@ const CheckoutFrom = ({ currentUser, toPay}) => {
                     timer: 1500
                 });
                 setPaymentSuccessfull(true)
+                
                 setTimeout(() => {
                     navigate(`/`)
                 }, 2000);

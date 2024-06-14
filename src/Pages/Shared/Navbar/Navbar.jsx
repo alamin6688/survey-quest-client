@@ -1,32 +1,72 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import useProUser from "../../../Hooks/useProUser";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  const [isProUser] = useProUser();
+  const [isAdmin] = useAdmin();
 
-  const {user, logOut} = useAuth();
-
-  const handleLogout = () =>{
+  const handleLogout = () => {
     logOut()
-      .then(()=>{})
-      .catch(error => console.error(error))
-  }
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
 
   const navLinks = (
     <>
-      <li><Link to="/" className="font-bold text-green-500">Home</Link></li>
-      <li><Link to="/surveys-page" className="font-bold">Surveys</Link></li>
-      <li><Link to="/payment" className="font-bold">Payment</Link></li>
-      <li><Link to="/dashboard" className="font-bold">Dashboard</Link></li>
-      <li><Link to="/addSurvey" className="font-bold">Add Survey</Link></li>
-    {
-      user? <>
-      <li><Link onClick={handleLogout} className="font-bold">Logout</Link></li>
-      </> : 
-      <>
-      <li><Link to="/login" className="font-bold">Login  </Link></li>
-      </>
-    }
-    
+      <li>
+        <Link to="/" className="font-bold text-green-500">
+          Home
+        </Link>
+      </li>
+      <li>
+        <Link to="/surveys-page" className="font-bold">
+          Surveys
+        </Link>
+      </li>
+      <li>
+        <Link to="/addSurvey" className="font-bold">
+          Add Survey
+        </Link>
+      </li>
+      {!isProUser || !isAdmin ? (
+        ""
+      ) : (
+        <div>
+          <li>
+            <Link to="/payment" className="font-bold">
+              Payment
+            </Link>
+          </li>
+        </div>
+      )}
+
+          <li>
+            <Link to="/dashboard" className="font-bold">
+              Dashboard
+            </Link>
+          </li>
+
+
+      {user ? (
+        <>
+          <li>
+            <Link onClick={handleLogout} className="font-bold">
+              Logout
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login" className="font-bold">
+              Login{" "}
+            </Link>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -58,7 +98,10 @@ const Navbar = () => {
               {navLinks}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost font-bold text-2xl md:text-4xl pl-0">
+          <Link
+            to="/"
+            className="btn btn-ghost font-bold text-2xl md:text-4xl pl-0"
+          >
             Survey <span className="text-green-500">Quest</span>
           </Link>
         </div>
@@ -66,10 +109,10 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-        <Link to='/surveys-page'>
-          <button className="btn bg-green-500 hover:bg-green-600 text-white border-none hover:font-bold">
-            Get Started
-          </button>
+          <Link to="/surveys-page">
+            <button className="btn bg-green-500 hover:bg-green-600 text-white border-none hover:font-bold">
+              Get Started
+            </button>
           </Link>
         </div>
       </div>

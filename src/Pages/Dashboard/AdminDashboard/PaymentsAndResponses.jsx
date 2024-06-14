@@ -1,11 +1,10 @@
-
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const PaymentsAndResponses = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: payments, isLoading: isPaymentsLoading, refetch: refetchPayments } = useQuery({
+  const { data: payments, isLoading: isPaymentsLoading } = useQuery({
     queryKey: ['payments'],
     queryFn: async () => {
       const res = await axiosSecure.get('/payments');
@@ -13,40 +12,39 @@ const PaymentsAndResponses = () => {
     }
   });
 
-  const { data: responses=[], isLoading: isResponsesLoading, refetch: refetchResponses } = useQuery({
-    queryKey: ['responses'],
-    queryFn: async () => {
-      const res = await axiosSecure.get('/responses');
-      return res.data;
-    }
-  });
 
-  if (isPaymentsLoading || isResponsesLoading) {
+
+  if (isPaymentsLoading ) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h2>Payments and Responses</h2>
-      <button onClick={refetchPayments}>Refetch Payments</button>
-      <button onClick={refetchResponses}>Refetch Responses</button>
-      <div>
         <h3>Payments</h3>
-        <ul>
-          {payments?.map(payment => (
-            <li key={payment._id}>{payment.amount}</li>
-          ))}
-        </ul>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Amount</th>
+              <th>Payment Method ID</th>
+              <th>Email</th>
+              <th>Payment Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments?.map((payment,index) => (
+              <tr key={payment._id}>
+                <td>{index+1}</td>
+                <td>{payment.amount}</td>
+                <td>{payment.paymentMethodId}</td>
+                <td>{payment.email}</td>
+                <td>{new Date(payment.paymentAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div>
-        <h3>Responses</h3>
-        <ul>
-          {responses?.map(response => (
-            <li key={response._id}>{response.answer}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+
   );
 };
 
