@@ -1,9 +1,12 @@
 import { useState } from "react";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
-const AddSurvey = () => {
-  const {user}=useAuth();
+const UpdateSurvey = () => {
+  const { id } = useParams();
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
@@ -11,7 +14,17 @@ const AddSurvey = () => {
   const [deadline, setDeadline] = useState("");
   const [count, setCount] = useState(0);
   const [error, setError] = useState("");
-  const axiosPublic=useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
+
+  const { data: surveys = [] } = useQuery({
+    queryKey: ["surveys"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/surveys`);
+      return res.data;
+    },
+  });
+
+  const currentSurvey = surveys.filter((survey) => survey._id === id);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -56,18 +69,20 @@ const AddSurvey = () => {
       category,
       deadline,
       status: "publish",
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString().split("T")[0],
       voteCount: count,
       surverior: user.email,
     };
 
     // Send formData to your server endpoint
-  axiosPublic.post('/surveys', survey)
+    axiosPublic.post("/surveys", survey);
   };
 
   return (
     <div className="w-full bg-base-200 rounded-xl mt-6 mb-16 py-8 px-4">
-      <h2 className="text-3xl text-center font-extrabold mb-6">Add New Survey</h2>
+      <h2 className="text-3xl text-center font-extrabold mb-6">
+        Update Survey
+      </h2>
       {error && <p className="text-red-500 text-center">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="w-full">
@@ -75,7 +90,7 @@ const AddSurvey = () => {
           <input
             type="text"
             name="title"
-            value={title}
+            value={currentSurvey.title}
             onChange={handleTitleChange}
             placeholder="Enter your survey title"
             className="input input-bordered w-full"
@@ -86,7 +101,7 @@ const AddSurvey = () => {
           <input
             type="text"
             name="description"
-            value={description}
+            value={currentSurvey.description}
             onChange={handleDescriptionChange}
             placeholder="Enter Description"
             className="input input-bordered w-full"
@@ -95,25 +110,39 @@ const AddSurvey = () => {
         <div className="w-full">
           <label className="text-black font-bold">Survey Category</label>
           <select
-            value={category}
+            value={currentSurvey.category}
             onChange={handleCategoryChange}
             className="input input-bordered w-full"
           >
             <option value="">Select a category</option>
-            <option value="Employee Engagement Survey">Employee Engagement Survey</option>
-            <option value="Product Feedback Survey">Product Feedback Survey</option>
-            <option value="Website Usability Survey">Website Usability Survey</option>
-            <option value="Market Research Survey">Market Research Survey</option>
-            <option value="Health and Wellness Survey">Health and Wellness Survey</option>
-            <option value="Customer Satisfaction Survey">Customer Satisfaction Survey</option>
+            <option value="Employee Engagement Survey">
+              Employee Engagement Survey
+            </option>
+            <option value="Product Feedback Survey">
+              Product Feedback Survey
+            </option>
+            <option value="Website Usability Survey">
+              Website Usability Survey
+            </option>
+            <option value="Market Research Survey">
+              Market Research Survey
+            </option>
+            <option value="Health and Wellness Survey">
+              Health and Wellness Survey
+            </option>
+            <option value="Customer Satisfaction Survey">
+              Customer Satisfaction Survey
+            </option>
           </select>
         </div>
         <div className="w-full">
-          <label className="text-black font-bold outline-none">Survey Deadline</label>
+          <label className="text-black font-bold outline-none">
+            Survey Deadline
+          </label>
           <input
             type="date"
             name="deadline"
-            value={deadline}
+            value={currentSurvey.deadline}
             onChange={handleDeadlineChange}
             className="input input-bordered w-full"
           />
@@ -123,7 +152,7 @@ const AddSurvey = () => {
           <input
             type="text"
             name="image"
-            value={image}
+            value={currentSurvey.image}
             onChange={handleImageChange}
             placeholder="Enter your survey image URL"
             className="input input-bordered w-full"
@@ -131,7 +160,9 @@ const AddSurvey = () => {
         </div>
         <div className="mb-4 space-y-4">
           <div className="space-y-4">
-            <p className="text-lg font-semibold mb-2">Is this Survey helpful?</p>
+            <p className="text-lg font-semibold mb-2">
+              Is this Survey helpful?
+            </p>
             <div className="flex items-center">
               <input
                 type="radio"
@@ -167,4 +198,4 @@ const AddSurvey = () => {
   );
 };
 
-export default AddSurvey;
+export default UpdateSurvey;

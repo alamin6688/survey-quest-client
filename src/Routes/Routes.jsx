@@ -11,8 +11,9 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers";
 import ManageSurveys from "../Pages/Dashboard/AdminDashboard/ManageSurveys";
 import PaymentsAndResponses from "../Pages/Dashboard/AdminDashboard/PaymentsAndResponses";
-import SurveyorDashboard from "../Pages/SurveyorDashboard/SurveyorDashboard";
-import AddSurvey from "../Pages/SurveyorDashboard/AddSurvey";
+import AddSurvey from '../Pages/Dashboard/SurveyorDashboard/AddSurvey'
+import SurveyorDashboard from '../Pages/Dashboard/SurveyorDashboard/SurveyorDashboard'
+import UpdateSurvey from '../Pages/Dashboard/SurveyorDashboard/UpdateSurvey'
 
 export const router = createBrowserRouter([
   {
@@ -37,12 +38,16 @@ export const router = createBrowserRouter([
         element: <Payments />,
       },
       {
-        path: "/surveyor-dashboard",
+        path: "/SurveyorDashboard",
         element: <SurveyorDashboard />,
       },
       {
         path: "/addSurvey",
-        element: <AddSurvey />,
+        element: <AddSurvey></AddSurvey>,
+      },
+      {
+        path: "/surveys/edit/:id",
+        element: <UpdateSurvey></UpdateSurvey>,
       },
       {
         path: "/surveys-page",
