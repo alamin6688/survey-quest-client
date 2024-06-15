@@ -13,7 +13,6 @@ const ParticipateDetails = () => {
       return res.data;
     },
   });
-
   const clickedParticipates = participates.filter(participate => participate.surveyId === id);
 
 console.log(clickedParticipates)
@@ -21,8 +20,9 @@ console.log(clickedParticipates)
 
   return (
     <div className="w-full py-8 px-4">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8">Participate Details</h2>
-      <table className="table-auto w-full">
+      <h2 className="text-3xl text-center md:text-3xl font-extrabold mb-8">Participate Details</h2>
+      <div className="overflow-x-auto w-full">
+      <table className="table table-zebra w-full">
         <thead>
           <tr className="bg-gray-200 text-lg font-bold text-black">
             <th>Serial No</th>
@@ -41,7 +41,7 @@ console.log(clickedParticipates)
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   );
 };

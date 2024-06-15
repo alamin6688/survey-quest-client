@@ -11,7 +11,7 @@ const SurveysPage = () => {
   useEffect(() => {
     // Fetch surveys from the API
     axios
-      .get("http://localhost:5000/surveys")
+      .get("https://survey-quest-server.vercel.app/surveys")
       .then((response) => {
         console.log(response.data);
         setSurveys(response.data);

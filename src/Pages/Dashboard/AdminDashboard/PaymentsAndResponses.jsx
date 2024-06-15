@@ -20,8 +20,9 @@ const PaymentsAndResponses = () => {
 
   return (
     <div>
-        <h3>Payments</h3>
-        <table className="table">
+        <h3 className="text-3xl text-center md:text-3xl font-extrabold mt-6 mb-8">Payments</h3>
+        <div className="overflow-x-auto w-full">
+        <table className="table table-zebra w-full">
           <thead>
             <tr>
               <th>Serial</th>
@@ -43,6 +44,7 @@ const PaymentsAndResponses = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
   );

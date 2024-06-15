@@ -43,30 +43,11 @@ const Navbar = () => {
         </div>
       )}
 
-          <li>
-            <Link to="/dashboard" className="font-bold">
-              Dashboard
-            </Link>
-          </li>
-
-
-      {user ? (
-        <>
-          <li>
-            <Link onClick={handleLogout} className="font-bold">
-              Logout
-            </Link>
-          </li>
-        </>
-      ) : (
-        <>
-          <li>
-            <Link to="/login" className="font-bold">
-              Login{" "}
-            </Link>
-          </li>
-        </>
-      )}
+      <li>
+        <Link to="/dashboard" className="font-bold">
+          Dashboard
+        </Link>
+      </li>
     </>
   );
 
@@ -109,11 +90,21 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/surveys-page">
-            <button className="btn bg-green-500 hover:bg-green-600 text-white border-none hover:font-bold">
-              Get Started
-            </button>
-          </Link>
+          {user ? (
+            <Link
+              onClick={handleLogout}
+              className="btn bg-red-500 hover:bg-green-600 text-white border-none hover:font-bold"
+            >
+              Logout
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="btn bg-green-500 hover:bg-green-600 text-white border-none hover:font-bold"
+            >
+              Login{" "}
+            </Link>
+          )}
         </div>
       </div>
     </>

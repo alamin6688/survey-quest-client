@@ -63,8 +63,8 @@ const ManageUsers = () => {
 
   return (
     <div>
-      <h2>Manage Users</h2>
-      <div>
+      <h2 className="text-3xl text-center md:text-3xl font-extrabold mb-8">Manage Users</h2>
+      <div className="text-center">
         <label htmlFor="roleFilter">Filter by role: </label>
         <select
           id="roleFilter"
@@ -77,8 +77,8 @@ const ManageUsers = () => {
           <option value="admin">Admin</option>
         </select>
       </div>
-
-      <table className="table ho w-full">
+      <div className="overflow-x-auto w-full">
+      <table className="table table-zebra w-full">
         {/* head */}
         <thead>
           <tr>
@@ -134,7 +134,7 @@ const ManageUsers = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </div>
   );
 };

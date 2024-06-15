@@ -9,7 +9,7 @@ const FeaturedSurveys = () => {
   } = useQuery({
     queryKey: ["surveys"],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/surveys`);
+      const res = await axios.get(`https://survey-quest-server.vercel.app/surveys`);
       return res.data;
     },
   });

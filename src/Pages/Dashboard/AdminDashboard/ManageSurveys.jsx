@@ -42,9 +42,10 @@ const ManageSurveys = () => {
 
   return (
     <div>
-      <h2>Manage Surveys</h2>
+      <h2 className="text-3xl text-center md:text-3xl font-extrabold mt-6 mb-8">Manage Surveys</h2>
       <div>
-        <table className="table ho w-full">
+      <div className="overflow-x-auto w-full">
+        <table className="table table-zebra w-full">
           {/* head */}
           <thead>
             <tr>
@@ -86,6 +87,7 @@ const ManageSurveys = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

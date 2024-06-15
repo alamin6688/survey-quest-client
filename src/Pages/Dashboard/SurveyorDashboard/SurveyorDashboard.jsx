@@ -43,17 +43,22 @@ const SurveyorDashboard = () => {
           >
             <img src={survey.image} alt="" className="mb-4" />
             <h3 className="text-2xl font-semibold mb-2">{survey.title}</h3>
-            <p className="text-gray-600 mb-4">{survey.description}</p>
+            <p className="text-gray-600 mb-4">
+            <span className="font-semibold text-black">Description:</span> {survey.description}
+            </p>
             <p className="text-gray-500 text-sm mb-2">
+            <span className="font-semibold text-black">Date:</span>
               {new Date(survey.createdAt).toLocaleDateString()}
             </p>
-            <p className="text-gray-500 text-sm mb-4">{survey.category}</p>
+            <p className="text-gray-500 text-sm mb-4">
+            <span className="font-semibold text-black">Vote Count: </span>
+              {survey.voteCount}</p>
             <div className="flex justify-between">
               <Link
                 to={`/surveys/edit/${survey._id}`}
-                className="btn btn-secondary "
+                className="btn btn-ghost text-white bg-blue-500 hover:bg-blue-600"
               >
-                Edit
+                Update
               </Link>
               <Link to={`participate-details/${survey._id}`} className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600">
                Details
