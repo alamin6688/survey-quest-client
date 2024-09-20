@@ -8,6 +8,8 @@ const SurveyorDashboard = () => {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
 
+  // const abcd = user.displayName;
+  // console.log(abcd);
 
   const { data: surveys = [] } = useQuery({
     queryKey: ["surveys"],
@@ -21,8 +23,6 @@ const SurveyorDashboard = () => {
     (survey) => survey.surverior === user?.email
   );
 
-
-
   return (
     <div className="w-full py-8 px-4">
       <div className="flex justify-between items-center mb-8">
@@ -35,37 +35,47 @@ const SurveyorDashboard = () => {
           Add Survey
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {currentUserSurveys.map((survey) => (
-          <div
-            key={survey._id}
-            className="bg-white rounded-lg border p-5 shadow-xl"
-          >
-            <img src={survey.image} alt="" className="mb-4" />
-            <h3 className="text-2xl font-semibold mb-2">{survey.title}</h3>
-            <p className="text-gray-600 mb-4">
-            <span className="font-semibold text-black">Description:</span> {survey.description}
-            </p>
-            <p className="text-gray-500 text-sm mb-2">
-            <span className="font-semibold text-black">Date:</span>
-              {new Date(survey.createdAt).toLocaleDateString()}
-            </p>
-            <p className="text-gray-500 text-sm mb-4">
-            <span className="font-semibold text-black">Vote Count: </span>
-              {survey.voteCount}</p>
-            <div className="flex justify-between">
-              <Link
-                to={`/surveys/edit/${survey._id}`}
-                className="btn btn-ghost text-white bg-blue-500 hover:bg-blue-600"
-              >
-                Update
-              </Link>
-              <Link to={`participate-details/${survey._id}`} className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600">
-               Details
-            </Link>
-            </div>
-          </div>
-        ))}
+      <div className="overflow-x-auto rounded-xl">
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr className="bg-gray-200 md:text-lg font-bold text-black">
+              <th className="px-4 py-2">Serial No</th>
+              <th className="px-4 py-2">Survey Title</th>
+              <th className="px-4 py-2">User Email</th>
+              <th className="px-4 py-2">Vote</th>
+              <th className="px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentUserSurveys.map((cuurentSurveyor, idx) => (
+              <tr key={idx}>
+                <td className="border px-4 py-2">{idx + 1}</td>
+                <td className="border px-4 py-2">
+                  {cuurentSurveyor.title}
+                </td>
+                <td className="border px-4 py-2">
+                  {cuurentSurveyor.surverior}
+                </td>
+                <td className="border px-4 py-2">
+                  {cuurentSurveyor.voteCount}
+                </td>
+                <td className="border flex justify-start gap-2 px-4 py-2">
+                  <Link to={`/surveys/edit/${cuurentSurveyor._id}`}>
+                    <button className="btn btn-ghost text-white bg-blue-500 hover:bg-blue-600">
+                      Update
+                    </button>
+                  </Link>
+                  <Link
+                    to={`participate-details/${cuurentSurveyor._id}`}
+                    className="btn btn-ghost bg-green-500 text-white font-bold hover:bg-green-600"
+                  >
+                    Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

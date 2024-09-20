@@ -142,6 +142,32 @@ const AddSurvey = () => {
             className="input input-bordered w-full"
           />
         </div>
+        {/* Radio 1 */}
+        <div className="mb-4 space-y-4">
+          <div className="space-y-4">
+            <p className="text-lg font-semibold mb-2">Would you prefer this survey to others?</p>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                name="radio-2"
+                value="yes"
+                className="radio"
+
+              />
+              <label className="ml-2">Yes</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                name="radio-2"
+                value="no"
+                className="radio"
+              />
+              <label className="ml-2">No</label>
+            </div>
+          </div>
+        </div>  
+        {/* Radio 2 */}
         <div className="mb-4 space-y-4">
           <div className="space-y-4">
             <p className="text-lg font-semibold mb-2">Is this Survey helpful?</p>
@@ -166,7 +192,7 @@ const AddSurvey = () => {
               <label className="ml-2">No</label>
             </div>
           </div>
-        </div>
+        </div> 
         <div className="w-full">
           <button
             type="submit"

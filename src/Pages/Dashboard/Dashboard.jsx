@@ -107,6 +107,7 @@ const Dashboard = () => {
           }
         </div>
 
+
         <div>
           {isUser && (
             <div>
@@ -149,6 +150,15 @@ const Dashboard = () => {
       {/* Dashboard content */}
       <div className="flex-1 p-2 md:p-5">
         <Outlet />
+          <div className="flex flex-col items-center justify-center min-h-screen space-y-3">
+            <img src="https://i.postimg.cc/6q7vVRWf/rag-doll-near-white-board-with-color-chart.jpg" alt="" />
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-600">
+              Welcome To Dashboard!
+            </h1>
+            <p className="w-full md:w-3/4 mx-auto text-center">
+              Explore insights and manage your tasks efficiently on your personalized dashboard!
+            </p>
+          </div>
       </div>
     </div>
   );

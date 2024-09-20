@@ -8,11 +8,12 @@ const useProUser = () => {
 
   const { data: isProUser, isLoading: isProUserLoading } = useQuery({
     queryKey: [user?.email, 'isProUser'],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`users/proUser/${user.email}`);
+      const res = await axiosSecure.get(`/users/proUser/${user.email}`);
       return res.data.proUser; // Assuming 'proUser' is the correct key in the response
     },
-    enabled: !!user?.email, // Ensure the query runs only if user.email is available
+ // Ensure the query runs only if user.email is available
   });
 
   return [isProUser, isProUserLoading];

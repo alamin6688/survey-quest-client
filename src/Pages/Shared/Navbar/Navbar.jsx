@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-import useProUser from "../../../Hooks/useProUser";
 import useAdmin from "../../../Hooks/useAdmin";
+import useSurveyor from "../../../Hooks/useSurveyor";
+import useProUser from "../../../Hooks/useProUser";
+import useUser from "../../../Hooks/useUser";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
-  const [isProUser] = useProUser();
   const [isAdmin] = useAdmin();
+  const [isProUser] = useProUser();
+  const [isSurveyor] = useSurveyor();
+  const [isUser] = useUser();
+
+  const { user, logOut } = useAuth();
 
   const handleLogout = () => {
     logOut()
@@ -31,23 +36,45 @@ const Navbar = () => {
           Add Survey
         </Link>
       </li>
-      {!isProUser || !isAdmin ? (
-        ""
-      ) : (
-        <div>
-          <li>
-            <Link to="/payment" className="font-bold">
-              Payment
-            </Link>
-          </li>
-        </div>
-      )}
 
       <li>
-        <Link to="/dashboard" className="font-bold">
-          Dashboard
+        <Link to="/payment" className="font-bold">
+          Payment
         </Link>
       </li>
+
+      {user ? (
+        <>
+          {isAdmin && (
+            <li>
+              <Link to="dashboard/admin/users" className="font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
+          {isProUser && (
+            <li>
+              <Link to="dashboard/surveys-page" className="font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
+          {isSurveyor && (
+            <li>
+              <Link to="dashboard/SurveyorDashboard" className="font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
+          {isUser && (
+            <li>
+              <Link to="dashboard/surveys-page" className="font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
+        </>
+      ) : null}
     </>
   );
 
